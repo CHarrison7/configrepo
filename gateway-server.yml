@@ -5,6 +5,8 @@ logstash.host: 3.136.161.26:5000
  
 logging: 
   config: classpath:logback-delayed.xml
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
   
  
 eureka:
@@ -26,12 +28,6 @@ spring:
         discovery.locator:
           enabled: true
           lowerCaseServiceId: true
-
-logging:
-  pattern:
-    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
-
-
     
 management:
   zipkin:
