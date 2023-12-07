@@ -1,0 +1,42 @@
+server:
+  port: 8072
+  
+logstash.host: 3.136.161.26:5000
+ 
+logging: 
+  config: classpath:logback-delayed.xml
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  
+ 
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eurekaserver:8070/eureka/
+      
+spring:
+  zipkin:
+    baseUrl: http://zipkin:9411
+    
+  cloud:
+    loadbalancer.ribbon.enabled: false
+    gateway:
+        discovery.locator:
+          enabled: true
+          lowerCaseServiceId: true
+    
+management:
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: "*"
